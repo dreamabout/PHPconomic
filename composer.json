@@ -4,12 +4,17 @@
     "require-dev": {
         "phpunit/phpunit": "3.7"
     },
-    "license": "GPL v3",
+    "license": "BSD-2-Clause",
     "authors": [
         {
             "name": "Thomas Faurbye Nielsen",
             "email": "archanium@gmail.com"
+        },
+        {
+            "name": "Dreamabout Aps",
+            "email": "we@dreamabout.dk"
         }
+
     ],
     "require": {
 
