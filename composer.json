@@ -16,7 +16,13 @@
         }
 
     ],
+    "autoload": {
+        "psr-0": {
+            "Dreamabout\\": "src/",
+            "Dreamabout\\Tests\\": "Tests/"
+        }
+    },
     "require": {
-
+        "guzzle/guzzle": "*"
     }
 }
