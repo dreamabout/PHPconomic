@@ -1,22 +1,24 @@
 <?php
 
 
-namespace Dreamabout\PHPconomic\Debtor;
+namespace Dreamabout\PHPConomic\Debtor;
 
 
-use Guzzle\Http\ClientInterface;
+use Dreamabout\PHPConomic;
 
 class Debtor
 {
-    private $client;
+    private $base;
 
-    public function __construct(ClientInterface $client)
+    public function __construct(PHPConomic $base)
     {
-        $this->client = $client;
+        $this->base = $base;
     }
 
-    public function create()
+    public function findDebtorByNumber($number)
     {
-        return new DebtorCreate();
+        $client = $this->base->getClient();
+        $client->connect();
+
     }
 }

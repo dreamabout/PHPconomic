@@ -23,6 +23,6 @@
         }
     },
     "require": {
-        "guzzle/guzzle": "*"
+        "symfony/event-dispatcher": "*"
     }
 }
