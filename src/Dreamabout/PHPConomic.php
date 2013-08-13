@@ -11,7 +11,7 @@ class PHPConomic
 {
     private $config;
     /** @var \SoapClient */
-    private $wsdl;
+    static private $wsdl;
     private $connected = false;
     private $connectionToken;
 
@@ -31,11 +31,11 @@ class PHPConomic
 
     public function getClient()
     {
-        if ($this->wsdl === null) {
+        if (self::$wsdl === null) {
             $this->start();
         }
 
-        return $this->wsdl;
+        return self::$wsdl;
     }
 
     protected function start()
@@ -46,8 +46,8 @@ class PHPConomic
         if (!file_exists($cacheFile) || filemtime($cacheFile) < time() - (24 * 3600 * 30)) {
             file_put_contents($cacheFile, file_get_contents(Configuration::WSDL_URL));
         }
-        if ($this->wsdl === null) {
-            $this->wsdl = new \SoapClient($cacheFile, array("trace" => true, "exception" => true, "cache" => WSDL_CACHE_DISK));
+        if (self::$wsdl === null) {
+            self::$wsdl = new \SoapClient($cacheFile, array("trace" => true, "exception" => true, "cache" => WSDL_CACHE_DISK));
         }
     }
 
@@ -76,4 +76,13 @@ class PHPConomic
 
     }
 
+    public function reset(Configuration $configuration = null)
+    {
+        unset(self::$wsdl);
+        $this->connected       = false;
+        $this->connectionToken = false;
+        if ($configuration !== null) {
+            $this->config = $configuration;
+        }
+    }
 }

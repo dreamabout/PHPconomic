@@ -13,11 +13,7 @@ class PHPConomicTest extends \PHPUnit_Framework_TestCase
 
     public function setUp()
     {
-        $config           = new Configuration();
-        $config->token    = "XTkjgtdXWUd4SgP65OTx1slAjXtdElBeU8viA7nOS3w1";
-        $config->appToken = "_0TbKb3Q2YAwqsca7BlNAi625omeQAdN5ZYeJtAqXIY1";
-
-        $this->uot = new PHPConomic($config);
+        $this->uot = uot();
     }
 
     public function testConnect()
