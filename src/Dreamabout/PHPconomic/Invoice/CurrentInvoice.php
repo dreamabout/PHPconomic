@@ -6,12 +6,43 @@ namespace Dreamabout\PHPConomic\Invoice;
 
 class CurrentInvoice extends Invoice
 {
+    protected $exchangeRate = 10000;
+    protected $isVatIncluded = true;
+    protected $margin = 0;
+    protected $marginAsPercent = false;
+    protected $required = array("date", "exchangeRate", "isVatIncluded", "netAmount", "vatAmount", "grossAmount", "margin", "marginAsPercent", "termOfPaymentHandle");
+    protected $vatAmount = 0;
+
     /**
-     * @param int $vatAmount
+     * @return int
      */
-    public function setVatAmount($vatAmount)
+    public function getExchangeRate()
     {
-        $this->vatAmount = $vatAmount;
+        return $this->exchangeRate;
+    }
+
+    /**
+     * @return boolean
+     */
+    public function getIsVatIncluded()
+    {
+        return $this->isVatIncluded;
+    }
+
+    /**
+     * @return int
+     */
+    public function getMargin()
+    {
+        return $this->margin;
+    }
+
+    /**
+     * @return boolean
+     */
+    public function getMarginAsPercent()
+    {
+        return $this->marginAsPercent;
     }
 
     /**
@@ -31,27 +62,11 @@ class CurrentInvoice extends Invoice
     }
 
     /**
-     * @return int
-     */
-    public function getExchangeRate()
-    {
-        return $this->exchangeRate;
-    }
-
-    /**
      * @param boolean $isVatIncluded
      */
     public function setIsVatIncluded($isVatIncluded)
     {
         $this->isVatIncluded = $isVatIncluded;
-    }
-
-    /**
-     * @return boolean
-     */
-    public function getIsVatIncluded()
-    {
-        return $this->isVatIncluded;
     }
 
     /**
@@ -63,14 +78,6 @@ class CurrentInvoice extends Invoice
     }
 
     /**
-     * @return int
-     */
-    public function getMargin()
-    {
-        return $this->margin;
-    }
-
-    /**
      * @param boolean $marginAsPercent
      */
     public function setMarginAsPercent($marginAsPercent)
@@ -79,16 +86,19 @@ class CurrentInvoice extends Invoice
     }
 
     /**
-     * @return boolean
+     * @param int $vatAmount
      */
-    public function getMarginAsPercent()
+    public function setVatAmount($vatAmount)
     {
-        return $this->marginAsPercent;
+        $this->vatAmount = $vatAmount;
     }
-    protected $marginAsPercent = false;
-    protected $margin = 0;
-    protected $vatAmount = 0;
-    protected $isVatIncluded = true;
-    protected $exchangeRate = 1;
-    protected $required = array("date", "exchangeRate", "isVatIncluded", "netAmount", "vatAmount", "grossAmount", "margin", "marginAsPercent", "termOfPaymentHandle");
+
+    public function setHandle($handle)
+    {
+        parent::setHandle($handle);
+        /** @var CurrentInvoiceLine $line */
+        foreach ($this->getLines() as $line) {
+            $line->setInvoiceHandle($handle);
+        }
+    }
 }

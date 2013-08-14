@@ -7,6 +7,7 @@ namespace Dreamabout;
 use Dreamabout\PHPConomic\Configuration;
 use Dreamabout\PHPConomic\Debtor\DebtorService;
 use Dreamabout\PHPConomic\Exception\AuthenticationException;
+use Dreamabout\PHPConomic\Product\ProductService;
 
 class PHPConomic
 {
@@ -67,6 +68,27 @@ class PHPConomic
         }
 
         return $this->instances["debtor"];
+    }
+
+    /**
+     * @return ProductService
+     */
+    public function getProduct()
+    {
+        if(!isset($this->instances["product"])) {
+            $this->instances["product"] = new ProductService($this);
+        }
+
+        return $this->instances["product"];
+    }
+
+    public function getCurrentInvoice()
+    {
+        if(!isset($this->instances["current_invoice"])) {
+            $this->instances["current_invoice"] = new CurrentInvoiceService($this);
+        }
+
+        return $this->instances["current_invoice"];
     }
 
     public function reset(Configuration $configuration = null)

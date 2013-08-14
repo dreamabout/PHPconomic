@@ -4,7 +4,9 @@
 namespace Dreamabout\PHPConomic\Exception\Debtor;
 
 
-class DebtorNotFoundException extends \Exception
+use Dreamabout\PHPConomic\Exception\PHPConomicException;
+
+class DebtorNotFoundException extends PHPConomicException
 {
 
 }

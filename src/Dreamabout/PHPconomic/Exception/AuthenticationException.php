@@ -6,7 +6,7 @@ namespace Dreamabout\PHPConomic\Exception;
 
 use Exception;
 
-class AuthenticationException extends \Exception
+class AuthenticationException extends PHPConomicException
 {
     public function __construct($message = "", $code = 0, Exception $previous = null)
     {

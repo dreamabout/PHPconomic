@@ -283,7 +283,10 @@ class Invoice extends Object
      */
     public function setLines($lines)
     {
-        $this->lines = (array) $lines;
+        $this->lines = array_values((array) $lines);
+        foreach($this->lines as $key => $line) {
+            $line->setNumber($key);
+        }
     }
 
     /**
