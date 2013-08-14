@@ -5,15 +5,17 @@ namespace Dreamabout;
 
 
 use Dreamabout\PHPConomic\Configuration;
+use Dreamabout\PHPConomic\Debtor\DebtorService;
 use Dreamabout\PHPConomic\Exception\AuthenticationException;
 
 class PHPConomic
 {
-    private $config;
     /** @var \SoapClient */
     static private $wsdl;
+    private $config;
     private $connected = false;
     private $connectionToken;
+    private $instances = array();
 
     public function __construct(Configuration $config)
     {
@@ -27,28 +29,6 @@ class PHPConomic
     public function __call($name, $arguments)
     {
         return call_user_func_array(array($this->getClient(), $name), $arguments);
-    }
-
-    public function getClient()
-    {
-        if (self::$wsdl === null) {
-            $this->start();
-        }
-
-        return self::$wsdl;
-    }
-
-    protected function start()
-    {
-        $this->connected = false;
-        $cacheFile       = Configuration::CACHE_DIR . "/" . Configuration::CACHE_FILE;
-
-        if (!file_exists($cacheFile) || filemtime($cacheFile) < time() - (24 * 3600 * 30)) {
-            file_put_contents($cacheFile, file_get_contents(Configuration::WSDL_URL));
-        }
-        if (self::$wsdl === null) {
-            self::$wsdl = new \SoapClient($cacheFile, array("trace" => true, "exception" => true, "cache" => WSDL_CACHE_DISK));
-        }
     }
 
     public function connect()
@@ -66,6 +46,15 @@ class PHPConomic
         return $this;
     }
 
+    public function getClient()
+    {
+        if (self::$wsdl === null) {
+            $this->start();
+        }
+
+        return self::$wsdl;
+    }
+
     public function getConfiguration()
     {
         return $this->config;
@@ -73,7 +62,11 @@ class PHPConomic
 
     public function getDebtor()
     {
+        if(!isset($this->instances["debtor"])) {
+            $this->instances["debtor"] = new DebtorService($this);
+        }
 
+        return $this->instances["debtor"];
     }
 
     public function reset(Configuration $configuration = null)
@@ -83,6 +76,19 @@ class PHPConomic
         $this->connectionToken = false;
         if ($configuration !== null) {
             $this->config = $configuration;
+        }
+    }
+
+    protected function start()
+    {
+        $this->connected = false;
+        $cacheFile       = Configuration::CACHE_DIR . "/" . Configuration::CACHE_FILE;
+
+        if (!file_exists($cacheFile) || filemtime($cacheFile) < time() - (24 * 3600 * 30)) {
+            file_put_contents($cacheFile, file_get_contents(Configuration::WSDL_URL));
+        }
+        if (self::$wsdl === null) {
+            self::$wsdl = new \SoapClient($cacheFile, array("trace" => true, "exception" => true, "cache" => WSDL_CACHE_DISK));
         }
     }
 }

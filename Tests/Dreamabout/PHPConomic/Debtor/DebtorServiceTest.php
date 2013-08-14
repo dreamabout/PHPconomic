@@ -6,14 +6,14 @@ namespace Dreamabout\PHPConomic\Debtor;
 
 use Dreamabout\PHPConomic\Exception\Debtor\DebtorNotFoundException;
 
-class DebtorTest extends \PHPUnit_Framework_TestCase
+class DebtorServiceTest extends \PHPUnit_Framework_TestCase
 {
-    /** @var Debtor  */
+    /** @var DebtorService  */
     private $uot;
 
     public function setUp()
     {
-        $this->uot = new Debtor(uot());
+        $this->uot = new DebtorService(uot());
     }
 
     public function testFindByNumber()

@@ -7,15 +7,8 @@ namespace Dreamabout\PHPConomic\Debtor;
 use Dreamabout\PHPConomic;
 use Dreamabout\PHPConomic\Exception\Debtor\DebtorNotFoundException;
 
-class Debtor
+class DebtorService extends PHPConomic\Service
 {
-    private $client;
-
-    public function __construct(PHPConomic $base)
-    {
-        $this->client = $base;
-    }
-
     public function findDebtorByNumber($number)
     {
         $this->client->connect();
