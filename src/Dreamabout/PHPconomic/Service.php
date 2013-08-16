@@ -15,7 +15,7 @@ class Service
         $this->client = $base;
     }
 
-    protected function getClient()
+    public function getClient()
     {
         return $this->client;
     }

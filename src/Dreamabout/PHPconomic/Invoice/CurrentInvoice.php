@@ -6,7 +6,7 @@ namespace Dreamabout\PHPConomic\Invoice;
 
 class CurrentInvoice extends Invoice
 {
-    protected $exchangeRate = 10000;
+    protected $exchangeRate = 100;
     protected $isVatIncluded = true;
     protected $margin = 0;
     protected $marginAsPercent = false;

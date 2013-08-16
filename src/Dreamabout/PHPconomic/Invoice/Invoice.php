@@ -17,6 +17,7 @@ class Invoice extends Object
     protected $grossAmount;
     protected $handle;
     protected $heading;
+    protected $id;
     protected $isVatIncluded = true;
     protected $netAmount;
     protected $netAmountDefaultCurrency;
@@ -103,6 +104,14 @@ class Invoice extends Object
     public function getHeading()
     {
         return $this->heading;
+    }
+
+    /**
+     * @return mixed
+     */
+    public function getId()
+    {
+        return $this->id;
     }
 
     /**
@@ -268,6 +277,14 @@ class Invoice extends Object
     public function setHeading($heading)
     {
         $this->heading = $heading;
+    }
+
+    /**
+     * @param mixed $id
+     */
+    public function setId($id)
+    {
+        $this->id = $id;
     }
 
     /**

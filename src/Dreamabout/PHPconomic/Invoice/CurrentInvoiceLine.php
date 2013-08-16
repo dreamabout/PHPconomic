@@ -2,6 +2,7 @@
 namespace Dreamabout\PHPConomic\Invoice;
 
 use Dreamabout\PHPConomic\Object;
+use Dreamabout\PHPConomic\Product\Product;
 
 class CurrentInvoiceLine extends Object
 {
@@ -100,6 +101,11 @@ class CurrentInvoiceLine extends Object
      */
     public function getProduct()
     {
+        if($this->product && !$this->product instanceof Product) {
+            $handle = $this->product;
+            $this->product = new Product();
+            $this->product->setHandle($handle);
+        }
         return $this->product;
     }
 
