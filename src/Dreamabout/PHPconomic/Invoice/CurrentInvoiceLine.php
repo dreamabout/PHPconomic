@@ -13,16 +13,18 @@ class CurrentInvoiceLine extends Object
     protected $handle;
     protected $id;
     protected $invoiceHandle;
-    protected $marginAsPercent;
+    protected $marginAsPercent = 0;
     protected $number;
     protected $product;
     protected $quantity;
-    protected $required = array("number", "discountAsPercent", "unitCostPrice");
-    protected $totalMargin;
-    protected $totalNetamount;
-    protected $unitCostPrice;
+    protected $required = array("number", "discountAsPercent");
+    protected $totalMargin = 0;
+    protected $totalNetAmount;
+    protected $unitCostPrice = 0;
     protected $unitHandle;
     protected $unitNetPrice;
+    protected $propsProtected = array("product");
+
 
     /**
      * @return mixed

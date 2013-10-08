@@ -7,6 +7,7 @@ namespace Dreamabout;
 use Dreamabout\PHPConomic\Configuration;
 use Dreamabout\PHPConomic\Debtor\DebtorService;
 use Dreamabout\PHPConomic\Exception\AuthenticationException;
+use Dreamabout\PHPConomic\Invoice\CurrentInvoiceService;
 use Dreamabout\PHPConomic\Product\ProductService;
 
 class PHPConomic

@@ -23,7 +23,6 @@ class Object
         foreach ($objVars as $key => $value) {
             if (!$this->isProtected($key)) {
                 if (is_object($value) && method_exists($value, "toArray")) {
-                    var_dump($value);
                     $return = array_merge($return, $value->toArray());
                     continue;
                 }

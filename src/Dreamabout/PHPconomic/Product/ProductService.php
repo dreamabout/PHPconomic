@@ -13,7 +13,7 @@ class ProductService extends Service
     {
         $this->client->connect();
         try {
-            $data     = array("data" => $product->toArray());
+            $data = array("data" => $product->toArray());
             try {
                 $product2 = $this->findByNumber($product->getNumber());
                 $product->setHandle($product2->getHandle());
@@ -22,7 +22,8 @@ class ProductService extends Service
             } catch (ProductNotFoundException $e) {
                 $response = $this->client->Product_CreateFromData($data);
                 if (isset($response->Product_CreateFromDataResult)) {
-                    $product->setHandle((array) $response->Product_CreateFromDataResult);
+                    $product->setHandle((array)$response->Product_CreateFromDataResult);
+
                     return $product;
                 }
             }
@@ -39,7 +40,28 @@ class ProductService extends Service
             $response = $this->client->Product_FindByNumber($data);
             if (isset($response->Product_FindByNumberResult)) {
                 $product = new Product();
-                $product->setHandle((array) $response->Product_FindByNumberResult);
+                $product->setHandle((array)$response->Product_FindByNumberResult);
+
+                return $product;
+            }
+            throw new ProductNotFoundException();
+        } catch (\SoapFault $e) {
+            throw $e;
+        }
+    }
+
+    public function getData(Product $product)
+    {
+        $this->client->connect();
+        try {
+            $data     = array("entityHandle" => $product->getHandle());
+            $response = $this->client->Product_GetData($data);
+            if (isset($response->Product_GetDataResult)) {
+                $product->setCostPrice($response->Product_GetDataResult->CostPrice);
+                $product->setRecommendedPrice($response->Product_GetDataResult->RecommendedPrice);
+                $product->setUnitHandle($response->Product_GetDataResult->UnitHandle);
+                $product->setName($response->Product_GetDataResult->Name);
+                $product->setDescription($response->Product_GetDataResult->Description);
 
                 return $product;
             }
@@ -53,7 +75,7 @@ class ProductService extends Service
     {
         $this->client->connect();
         try {
-            $data     = array("productHandle" => array("Number" => $number));
+            $data = array("productHandle" => array("Number" => $number));
 
 
             return $this->client->Product_Delete($data);
@@ -67,6 +89,7 @@ class ProductService extends Service
         $this->client->connect();
 
         $response = $this->client->ProductGroup_GetAll();
+
         return $response->ProductGroup_GetAllResult->ProductGroupHandle;
 
     }

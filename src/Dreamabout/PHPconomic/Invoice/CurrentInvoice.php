@@ -9,7 +9,7 @@ class CurrentInvoice extends Invoice
     protected $exchangeRate = 100;
     protected $isVatIncluded = true;
     protected $margin = 0;
-    protected $marginAsPercent = false;
+    protected $marginAsPercent = 0;
     protected $required = array("date", "exchangeRate", "isVatIncluded", "netAmount", "vatAmount", "grossAmount", "margin", "marginAsPercent", "termOfPaymentHandle");
     protected $vatAmount = 0;
 

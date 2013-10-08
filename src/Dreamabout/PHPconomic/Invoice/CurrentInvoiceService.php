@@ -34,6 +34,7 @@ class CurrentInvoiceService extends Service
 
                 return $invoice;
             }
+            var_dump($response);
         } catch (\SoapFault $e) {
             throw $e;
         }
@@ -57,6 +58,7 @@ class CurrentInvoiceService extends Service
 
                 return $line;
             }
+            var_dump($response);
         } catch (\SoapFault $e) {
             throw $e;
         }
