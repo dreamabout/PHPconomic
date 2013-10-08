@@ -19,12 +19,7 @@ class DebtorService extends PHPConomic\Service
             }
             return $response;
         } catch (\SoapFault $e) {
-            throw new PHPConomicException($e->getMessage());
+            throw new PHPConomic\Exception\PHPConomicException($e->getMessage());
         }
-    }
-
-    public function getClient()
-    {
-        return $this->client;
     }
 }

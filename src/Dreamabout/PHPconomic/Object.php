@@ -52,4 +52,13 @@ class Object
     {
         return in_array($key, $this->required);
     }
+
+    protected function getHandle($handle, $key = "Number")
+    {
+        if (is_array($handle) && array_key_exists($key, $handle)) {
+            return $handle;
+        } else {
+            return array("Number" => $handle);
+        }
+    }
 }

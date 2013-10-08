@@ -41,6 +41,7 @@ class PHPConomic
         try {
             $response              = $this->getClient()->connectWithToken(array("token" => $this->config->token, "appToken" => $this->config->appToken));
             $this->connectionToken = $response->ConnectWithTokenResult;
+            $this->connected       = true;
         } catch (\SoapFault $e) {
             throw new AuthenticationException($e->getMessage(), $e->getCode());
         }
@@ -64,7 +65,7 @@ class PHPConomic
 
     public function getDebtor()
     {
-        if(!isset($this->instances["debtor"])) {
+        if (!isset($this->instances["debtor"])) {
             $this->instances["debtor"] = new DebtorService($this);
         }
 
@@ -76,7 +77,7 @@ class PHPConomic
      */
     public function getProduct()
     {
-        if(!isset($this->instances["product"])) {
+        if (!isset($this->instances["product"])) {
             $this->instances["product"] = new ProductService($this);
         }
 
@@ -85,7 +86,7 @@ class PHPConomic
 
     public function getCurrentInvoice()
     {
-        if(!isset($this->instances["current_invoice"])) {
+        if (!isset($this->instances["current_invoice"])) {
             $this->instances["current_invoice"] = new CurrentInvoiceService($this);
         }
 
