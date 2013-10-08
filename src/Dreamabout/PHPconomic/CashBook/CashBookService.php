@@ -38,4 +38,16 @@ class CashBookService extends Service
             throw new PHPConomicException($e->getMessage());
         }
     }
+
+    public function findByName($name)
+    {
+        $this->client->connect();
+        try {
+            $response = $this->client->CashBook_FindByName($name);
+
+            return new CashBook((array) $response->CashBook_FindByNameResult);
+        } catch (\SoapFault $e) {
+            throw new PHPConomicException($e->getMessage());
+        }
+    }
 }
